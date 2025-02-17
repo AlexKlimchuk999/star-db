@@ -1,0 +1,28 @@
+.person-details {
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: 200px 1fr;
+}
+
+.person-details .person-image {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.person-details .list-group-item {
+  padding: .25rem;
+  text-align: left;
+}
+
+.person-details .list-group-item .term{
+  margin-right: .5rem;
+}
+h4 {
+  text-align: left;
+}
+@media (max-width: 580px) {
+  .person-details {
+    margin-top: 15px;
+    grid-template-columns: 120px 1fr;
+  }
+}

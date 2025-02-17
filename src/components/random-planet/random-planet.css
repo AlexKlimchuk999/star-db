@@ -1,0 +1,42 @@
+.random-planet {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  padding: 1rem;
+  background-color: #303030;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.random-planet .planet-image {
+
+  border-radius: 10px;
+  margin-right: 1rem;
+  width: 150px;
+  height: 150px;
+}
+
+.random-planet .list-group-item {
+  padding: .25rem;
+  text-align: left;
+}
+
+.random-planet .list-group-item .term {
+  margin-right: .5rem;
+}
+
+h4 {
+  text-align: left;
+}
+
+@media (max-width: 580px) {
+  .random-planet {
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+  }
+  .random-planet .planet-image {
+
+    margin-right: 0;
+    width: 100px;
+    height: 100px;
+  }
+}
