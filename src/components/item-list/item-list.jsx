@@ -24,7 +24,7 @@ const ItemList = (props) => {
   })
 
   return (
-    <ul className="item-list list-group mt-5">
+    <ul className="item-list list-group">
       {items}
     </ul>
   );

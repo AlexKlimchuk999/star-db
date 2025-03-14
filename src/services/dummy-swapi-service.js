@@ -1,5 +1,7 @@
 export default class DummySwapiService {
 
+  _imageBase = '../img/';
+
   _people = [
     {
       id: 1,
@@ -74,14 +76,14 @@ export default class DummySwapiService {
   };
 
   getPersonImage = () => {
-    return `https://placeimg.com/400/500/people`
+    return `${this._imageBase}/characters/1.jpg`
   };
 
   getStarshipImage = () => {
-    return `https://placeimg.com/600/400/tech`;
+    return `${this._imageBase}/starships/40.jpg`
   };
 
   getPlanetImage = () => {
-    return `https://placeimg.com/400/400/nature`
+    return `${this._imageBase}/planets/21.jpg`
   };
 }

@@ -5,52 +5,50 @@ import RandomPlanet from '../random-planet/random-planet';
 import SwapiService from '../../services/swapi-sevice';
 import { SwapiServiceProvider } from '../swapi-service-context/swapi-service-context';
 import DummySwapiService from '../../services/dummy-swapi-service';
+import { PeoplePage, PlanetsPage, StarshipsPage } from '../pages';
 
-import {   
-  PersonDetails,
-  PlanetDetails,
-  StarshipDetails,
-  PersonList,
-  PlanetList,
-  StarshipList
-} from '../sw-components';
 
 import './App.css'
 
 export default class App extends Component {
-  swapiService = new DummySwapiService();
 
+  state = {
+    swapiService: new SwapiService()
+  }
+
+  onServiceChange = () => {
+    this.setState(({ swapiService }) => {
+      const Service = swapiService instanceof SwapiService ?
+      DummySwapiService : SwapiService;
+    
+    
+        console.log('switched to', Service.name);
+        
+        return {
+        swapiService: new Service()
+        }
+    })
+  }
+ 
   render(){
-
-    const {
-      getPerson,
-      getStarship,
-      getPersonImage,
-      getStarshipImage,
-      getAllStarship,
-      getAllPeople,
-      getAllPlanets
-    } = this.swapiService;
-
-
+    
     return (
-      // <ErrorBoundry>
-        <SwapiServiceProvider value={this.swapiService}>
+      <ErrorBoundry>
+        <SwapiServiceProvider value={this.state.swapiService}>
           <div className="container-fluid">
-            <Header />
+            <Header onServiceChange={this.onServiceChange} />
 
-            <PersonDetails itemId={11}/>
-            <PlanetDetails itemId={5}/>
-            <StarshipDetails itemId={9}/>
+            <RandomPlanet />
 
-            <PersonList/>
+            <PeoplePage />
 
-            <StarshipList/>
+            <PlanetsPage />
 
-            <PlanetList/>
+            <StarshipsPage />
+
           </div>
         </SwapiServiceProvider>
-      // </ErrorBoundry>
+       </ErrorBoundry>
     );
   }
  
