@@ -5,15 +5,31 @@ import RandomPlanet from '../random-planet/random-planet';
 import SwapiService from '../../services/swapi-sevice';
 import { SwapiServiceProvider } from '../swapi-service-context/swapi-service-context';
 import DummySwapiService from '../../services/dummy-swapi-service';
-import { PeoplePage, PlanetsPage, StarshipsPage } from '../pages';
+import { PeoplePage, PlanetsPage, StarshipsPage, LoginPage, SecretPage } from '../pages';
 
+import { BrowserRouter as Router,Routes, Route, Navigate, useParams } from 'react-router-dom';
 
 import './App.css'
+import StarshipDetails from '../sw-components/starship-details';
 
+
+function StarshipDetailsWrapper() {
+  const {id } = useParams();
+  console.log(id); // ID звездолёта из URL
+
+  return <StarshipDetails itemId={id} />;
+}
 export default class App extends Component {
 
   state = {
-    swapiService: new SwapiService()
+    swapiService: new SwapiService(),
+    isLoggedIn: false
+  }
+
+  onLogin = () => {
+    this.setState({
+      isLoggedIn: true
+    })
   }
 
   onServiceChange = () => {
@@ -29,24 +45,38 @@ export default class App extends Component {
         }
     })
   }
- 
+
   render(){
-    
+
+    const { isLoggedIn } = this.state;
+
     return (
       <ErrorBoundry>
         <SwapiServiceProvider value={this.state.swapiService}>
-          <div className="container-fluid">
-            <Header onServiceChange={this.onServiceChange} />
+          <Router>
+            <div className="container-fluid">
+              <Header onServiceChange={this.onServiceChange} />
 
-            <RandomPlanet />
+              <RandomPlanet />
 
-            <PeoplePage />
+              <Routes>
+                  <Route path='/' element={<h2>Hello words</h2>} />
+                  <Route path='/people/:id?' element={<PeoplePage/>}/>
+                  <Route path='/planets' element={<PlanetsPage/>}/>
+                  <Route path='/starships' element={<StarshipsPage/>}/>
 
-            <PlanetsPage />
+                  <Route path="/starships/:id" element={<StarshipDetailsWrapper />} />
 
-            <StarshipsPage />
+                  <Route path="/login" element={<LoginPage 
+                    isLoggedIn={isLoggedIn} 
+                    onLogin={this.onLogin}/>}/>
+                  <Route path="/secret" element={<SecretPage isLoggedIn={isLoggedIn}/>}/>
 
-          </div>
+                  <Route path="*" element={<h2>Page not found</h2>} />
+              </Routes>
+              
+            </div>
+          </Router>
         </SwapiServiceProvider>
        </ErrorBoundry>
     );
